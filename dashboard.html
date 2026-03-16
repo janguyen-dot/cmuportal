@@ -1,19 +1,145 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Application Dashboard</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SoFi — Application Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sofi-blue: #00A2C7;
+    --sofi-blue-dark: #007FA0;
+    --sofi-blue-light: #E0F6FB;
+    --sofi-blue-mid: #B3E8F5;
+    --dark: #0D1B2A;
+    --mid: #2D4A5F;
+    --muted: #7A96A8;
+    --bg: #F4FAFB;
+    --white: #FFFFFF;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .bg-circles { position: fixed; inset: 0; pointer-events: none; overflow: hidden; }
+  .bg-circles span { position: absolute; border-radius: 50%; background: var(--sofi-blue); opacity: 0.06; animation: floatDot linear infinite; }
+  .bg-circles span:nth-child(1) { width:180px;height:180px;top:-60px;left:10%;animation-duration:18s; }
+  .bg-circles span:nth-child(2) { width:80px;height:80px;top:15%;left:75%;animation-duration:14s;animation-delay:-4s; }
+  .bg-circles span:nth-child(3) { width:120px;height:120px;top:60%;left:5%;animation-duration:20s;animation-delay:-8s; }
+  .bg-circles span:nth-child(4) { width:220px;height:220px;top:70%;left:65%;animation-duration:22s;animation-delay:-2s; }
+  .bg-circles span:nth-child(5) { width:50px;height:50px;top:35%;left:90%;animation-duration:12s;animation-delay:-6s; }
+  .bg-circles span:nth-child(6) { width:90px;height:90px;top:85%;left:30%;animation-duration:16s;animation-delay:-10s; }
+  @keyframes floatDot {
+    0%   { transform: translateY(0) scale(1); opacity: 0.06; }
+    50%  { transform: translateY(-30px) scale(1.05); opacity: 0.1; }
+    100% { transform: translateY(0) scale(1); opacity: 0.06; }
+  }
+  .card {
+    position: relative; z-index: 10;
+    background: var(--white);
+    border-radius: 24px;
+    width: 100%; max-width: 460px; margin: 24px;
+    box-shadow: 0 1px 2px rgba(0,162,199,0.08), 0 8px 32px rgba(0,130,160,0.12), 0 32px 64px rgba(13,27,42,0.08);
+    overflow: hidden;
+    animation: cardIn 0.65s cubic-bezier(0.22,1,0.36,1) both;
+  }
+  @keyframes cardIn {
+    from { opacity: 0; transform: translateY(24px) scale(0.98); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  .card-header {
+    background: linear-gradient(135deg, var(--sofi-blue) 0%, #00BFE8 100%);
+    padding: 28px 32px 24px;
+    position: relative; overflow: hidden;
+  }
+  .header-circles { position: absolute; right: -20px; top: -20px; width: 140px; height: 140px; pointer-events: none; }
+  .hc { position: absolute; border-radius: 50%; border: 2px solid rgba(255,255,255,0.2); }
+  .hc1 { width:80px;height:80px;top:20px;right:20px; }
+  .hc2 { width:50px;height:50px;top:50px;right:10px;background:rgba(255,255,255,0.08); }
+  .hc3 { width:30px;height:30px;top:18px;right:65px;background:rgba(255,255,255,0.12); }
+  .hc4 { width:12px;height:12px;top:72px;right:72px;background:rgba(255,255,255,0.3);border:none; }
+  .sofi-logo { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+  .sofi-logo-mark { width:36px;height:36px;background:rgba(255,255,255,0.2);border-radius:50%;display:flex;align-items:center;justify-content:center;position:relative; }
+  .sofi-logo-mark::after { content:'';width:14px;height:14px;border-radius:50%;background:white;opacity:0.9; }
+  .sofi-wordmark { font-size:22px;font-weight:800;color:white;letter-spacing:-0.5px; }
+  .sofi-wordmark span { font-weight:800;opacity:1; }
+  .header-title { font-size:13px;font-weight:600;color:rgba(255,255,255,0.7);letter-spacing:1.5px;text-transform:uppercase; }
+  .card-body { padding: 28px 32px 32px; }
+  .section-label { font-size:11px;font-weight:700;color:var(--muted);letter-spacing:1.8px;text-transform:uppercase;margin-bottom:16px; }
+  .info-grid { display:flex;flex-direction:column;background:var(--bg);border-radius:14px;overflow:hidden;border:1px solid rgba(0,162,199,0.1);margin-bottom:24px; }
+  .info-row { display:flex;align-items:center;justify-content:space-between;padding:15px 18px;border-bottom:1px solid rgba(0,162,199,0.08); }
+  .info-row:last-child { border-bottom: none; }
+  .info-key { font-size:13px;color:var(--muted);font-weight:500; }
+  .info-val { font-size:14px;font-weight:600;color:var(--dark); }
+  .status-badge { display:inline-flex;align-items:center;gap:7px;background:var(--sofi-blue-light);color:var(--sofi-blue-dark);border:1.5px solid var(--sofi-blue-mid);border-radius:99px;padding:5px 12px 5px 8px;font-size:13px;font-weight:600;animation:popIn 0.4s 0.5s cubic-bezier(0.34,1.56,0.64,1) both; }
+  .pulse-ring { width:10px;height:10px;position:relative;flex-shrink:0; }
+  .pulse-ring::before { content:'';position:absolute;inset:0;border-radius:50%;background:var(--sofi-blue);animation:ripple 1.8s ease-out infinite; }
+  .pulse-ring::after { content:'';position:absolute;inset:2px;border-radius:50%;background:var(--sofi-blue); }
+  @keyframes ripple { 0%{transform:scale(1);opacity:0.8;} 100%{transform:scale(2.5);opacity:0;} }
+  @keyframes popIn { from{opacity:0;transform:scale(0.75);} to{opacity:1;transform:scale(1);} }
+  .cta-btn { width:100%;padding:17px 24px;background:linear-gradient(135deg,var(--sofi-blue) 0%,#00BFE8 100%);color:white;border:none;border-radius:14px;font-family:'Inter',sans-serif;font-size:15px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;position:relative;overflow:hidden;transition:transform 0.15s ease,box-shadow 0.15s ease;box-shadow:0 4px 18px rgba(0,162,199,0.38);letter-spacing:0.1px; }
+  .cta-btn::before { content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,0.15) 0%,transparent 60%);pointer-events:none; }
+  .cta-btn:hover { transform:translateY(-2px);box-shadow:0 8px 28px rgba(0,162,199,0.48); }
+  .cta-btn:active { transform:translateY(0);box-shadow:0 2px 8px rgba(0,162,199,0.25); }
+  .btn-arrow { font-size:18px;transition:transform 0.2s ease; }
+  .cta-btn:hover .btn-arrow { transform:translateX(4px); }
+  .footer-note { margin-top:16px;text-align:center;font-size:12px;color:var(--muted); }
+  .footer-note a { color:var(--sofi-blue);font-weight:600;text-decoration:none; }
+  .footer-note a:hover { text-decoration:underline; }
+  .divider { height:1px;background:linear-gradient(90deg,transparent,rgba(0,162,199,0.15),transparent);margin:24px 0; }
+</style>
 </head>
-
-<body style="font-family:Arial;text-align:center;margin-top:100px;">
-
-<h2>Application Dashboard</h2>
-
-<p><b>Applicant:</b> Jane Doe</p>
-<p><b>Application Status:</b> Update Available</p>
-
-<button onclick="location.href='status.html'">
-View Application Status Update
-</button>
-
+<body>
+  <div class="bg-circles">
+    <span></span><span></span><span></span>
+    <span></span><span></span><span></span>
+  </div>
+  <div class="card">
+    <div class="card-header">
+      <div class="header-circles">
+        <div class="hc hc1"></div>
+        <div class="hc hc2"></div>
+        <div class="hc hc3"></div>
+        <div class="hc hc4"></div>
+      </div>
+      <div class="sofi-logo">
+        <div class="sofi-logo-mark"></div>
+        <div class="sofi-wordmark">SoFi</div>
+      </div>
+      <div class="header-title">Application Dashboard</div>
+    </div>
+    <div class="card-body">
+      <div class="section-label">Your Application</div>
+      <div class="info-grid">
+        <div class="info-row">
+          <span class="info-key">Application Year</span>
+          <span class="info-val">2026 – 2027</span>
+        </div>
+        <div class="info-row">
+          <span class="info-key">Status</span>
+          <span class="status-badge">
+            <span class="pulse-ring"></span>
+            Update Available
+          </span>
+        </div>
+      </div>
+      <div class="divider"></div>
+      <button class="cta-btn" onclick="location.href='status.html'">
+        View Status Update
+        <span class="btn-arrow">→</span>
+      </button>
+      <div class="footer-note">
+        Need help? <a href="mailto:support@sofi.com">Contact Support</a>
+      </div>
+    </div>
+  </div>
 </body>
 </html>
