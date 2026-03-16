@@ -4,58 +4,83 @@
   <title>Applicant Portal</title>
 
   <style>
+    /* Make padding consistent in width calculation */
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
     body{
-      font-family: Arial;
+      font-family: Arial, sans-serif;
       background:#f5f7fb; /* page background */
       text-align:center;
-      margin-top:120px;
+      margin:0;
+      padding:0;
+    }
+
+    .portal-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh; /* center portal vertically */
     }
 
     .portal{
-      background: rgba(255,255,255,0.9); /* slightly transparent so logo shows behind */
+      background: rgba(255,255,255,0.95); /* slightly transparent */
       padding:40px;
       width:350px;
-      margin:auto;
-      box-shadow:0 0 10px rgba(0,0,0,0.1);
-      border-radius:8px;
-    }
-
-    input{
-      width:100%;
-      padding:10px;
-      margin:10px 0;
-    }
-
-    button {
-      background: #FF6F61;   /* your new color */
-      color: white;          /* text color */
-      padding: 16px;         /* height of the button */
-      width: 100%;           /* same as inputs */
-      display: block;        /* ensures it takes full width */
-      border: none;
-      cursor: pointer;
-      font-size: 16px;
+      box-shadow:0 0 15px rgba(0,0,0,0.2);
+      border-radius:10px;
+      text-align:center;
     }
 
     .logo{
       width:120px;
-      margin-bottom:40px;
+      margin-bottom:30px;
+    }
+
+    h2 {
+      margin-bottom: 30px;
+    }
+
+    input{
+      width:100%;
+      padding:12px;
+      margin:10px 0;
+      font-size: 16px;
+      border:1px solid #ccc;
+      border-radius:6px;
+    }
+
+    button {
+      background: #FF6F61;   /* custom color */
+      color: white;
+      padding: 14px;
+      width: 100%;           /* same width as inputs */
+      display: block;
+      border: none;
+      border-radius:6px;
+      cursor: pointer;
+      font-size: 16px;
+      margin-top:15px;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background: #e85b50;   /* slightly darker on hover */
     }
   </style>
 </head>
 
 <body>
 
-<div class="portal">
-  <!-- logo goes here, inside portal -->
-  <img src="logo.png" class="logo" alt="University Logo">
-
-  <h2>Applicant Portal</h2>
-
-  <input placeholder="Email">
-  <input type="password" placeholder="Password">
-
-  <button onclick="location.href='dashboard.html'">Login</button>
+<div class="portal-container">
+  <div class="portal">
+    <img src="logo.png" class="logo" alt="University Logo">
+    <h2>Applicant Portal</h2>
+    <input type="email" placeholder="Email">
+    <input type="password" placeholder="Password">
+    <button onclick="location.href='dashboard.html'">Login</button>
+  </div>
 </div>
 
 </body>
