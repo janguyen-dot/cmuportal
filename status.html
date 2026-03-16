@@ -1,40 +1,357 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CMU — Application Status</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<style>
+  :root {
+    --sofi-blue: #00A2C7;
+    --sofi-blue-dark: #007FA0;
+    --sofi-blue-light: #E0F6FB;
+    --sofi-blue-mid: #B3E8F5;
+    --dark: #0D1B2A;
+    --muted: #7A96A8;
+    --bg: #F4FAFB;
+    --white: #FFFFFF;
+  }
 
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  /* Background circles */
+  .bg-circles { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 0; }
+  .bg-circles span { position: absolute; border-radius: 50%; background: var(--sofi-blue); opacity: 0.06; animation: floatDot linear infinite; }
+  .bg-circles span:nth-child(1) { width:180px;height:180px;top:-60px;left:10%;animation-duration:18s; }
+  .bg-circles span:nth-child(2) { width:80px;height:80px;top:15%;left:75%;animation-duration:14s;animation-delay:-4s; }
+  .bg-circles span:nth-child(3) { width:120px;height:120px;top:60%;left:5%;animation-duration:20s;animation-delay:-8s; }
+  .bg-circles span:nth-child(4) { width:220px;height:220px;top:70%;left:65%;animation-duration:22s;animation-delay:-2s; }
+  .bg-circles span:nth-child(5) { width:50px;height:50px;top:35%;left:90%;animation-duration:12s;animation-delay:-6s; }
+  .bg-circles span:nth-child(6) { width:90px;height:90px;top:85%;left:30%;animation-duration:16s;animation-delay:-10s; }
+
+  @keyframes floatDot {
+    0%,100% { transform: translateY(0) scale(1); opacity:0.06; }
+    50%      { transform: translateY(-30px) scale(1.05); opacity:0.1; }
+  }
+
+  /* ── PRE-REVEAL SCREEN ── */
+  #pre-reveal {
+    position: relative; z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    animation: cardIn 0.65s cubic-bezier(0.22,1,0.36,1) both;
+  }
+
+  @keyframes cardIn {
+    from { opacity:0; transform:translateY(24px) scale(0.98); }
+    to   { opacity:1; transform:translateY(0) scale(1); }
+  }
+
+  .pre-card {
+    background: var(--white);
+    border-radius: 24px;
+    width: 100%; max-width: 420px;
+    margin: 24px;
+    box-shadow: 0 1px 2px rgba(0,162,199,0.08), 0 8px 32px rgba(0,130,160,0.12), 0 32px 64px rgba(13,27,42,0.08);
+    overflow: hidden;
+  }
+
+  .pre-header {
+    background: linear-gradient(135deg, var(--sofi-blue) 0%, #00BFE8 100%);
+    padding: 28px 32px 24px;
+    position: relative; overflow: hidden;
+  }
+  .hc { position:absolute;border-radius:50%;border:2px solid rgba(255,255,255,0.2); }
+  .hc1 { width:80px;height:80px;top:-10px;right:10px; }
+  .hc2 { width:50px;height:50px;top:40px;right:5px;background:rgba(255,255,255,0.08); }
+  .hc3 { width:30px;height:30px;top:8px;right:65px;background:rgba(255,255,255,0.12); }
+  .hc4 { width:12px;height:12px;top:58px;right:68px;background:rgba(255,255,255,0.3);border:none; }
+
+  .sofi-logo { display:flex;align-items:center;gap:10px;margin-bottom:14px; }
+  .sofi-logo-mark { width:36px;height:36px;background:rgba(255,255,255,0.2);border-radius:50%;display:flex;align-items:center;justify-content:center; }
+  .sofi-logo-mark::after { content:'';width:14px;height:14px;border-radius:50%;background:white;opacity:0.9; }
+  .sofi-wordmark { font-size:22px;font-weight:800;color:white;letter-spacing:-0.5px; }
+  .header-sub { font-size:13px;font-weight:600;color:rgba(255,255,255,0.7);letter-spacing:1.5px;text-transform:uppercase; }
+
+  .pre-body { padding: 36px 32px 32px; text-align: center; }
+
+  .envelope {
+    width: 72px; height: 72px;
+    background: var(--sofi-blue-light);
+    border: 2px solid var(--sofi-blue-mid);
+    border-radius: 18px;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 20px;
+    font-size: 32px;
+    animation: float 3s ease-in-out infinite;
+  }
+  @keyframes float {
+    0%,100% { transform: translateY(0); }
+    50%      { transform: translateY(-6px); }
+  }
+
+  .pre-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px; font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 10px;
+  }
+  .pre-subtitle {
+    font-size: 14px; color: var(--muted);
+    line-height: 1.6; margin-bottom: 28px;
+  }
+
+  .reveal-btn {
+    width: 100%;
+    padding: 17px 24px;
+    background: linear-gradient(135deg, var(--sofi-blue) 0%, #00BFE8 100%);
+    color: white; border: none; border-radius: 12px;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px; font-weight: 700;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    position: relative; overflow: hidden;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    box-shadow: 0 4px 18px rgba(0,162,199,0.38);
+  }
+  .reveal-btn::before { content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,0.15) 0%,transparent 60%);pointer-events:none; }
+  .reveal-btn:hover { transform:translateY(-2px);box-shadow:0 8px 28px rgba(0,162,199,0.48); }
+  .reveal-btn:active { transform:translateY(0); }
+  .btn-arrow { font-size:17px;transition:transform 0.2s ease; }
+  .reveal-btn:hover .btn-arrow { transform:translateX(4px); }
+
+  /* ── POST-REVEAL SCREEN ── */
+  #post-reveal {
+    display: none;
+    position: relative; z-index: 10;
+    flex-direction: column;
+    align-items: center;
+    width: 100%; max-width: 860px;
+    padding: 24px;
+    animation: fadeUp 0.8s cubic-bezier(0.22,1,0.36,1) both;
+  }
+  @keyframes fadeUp {
+    from { opacity:0; transform:translateY(32px); }
+    to   { opacity:1; transform:translateY(0); }
+  }
+
+  /* Congrats banner */
+  .congrats-banner {
+    background: linear-gradient(135deg, var(--sofi-blue) 0%, #00BFE8 100%);
+    border-radius: 20px 20px 0 0;
+    width: 100%;
+    padding: 28px 36px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+  }
+  .banner-circles { position:absolute;right:-10px;top:-10px; }
+  .bc { position:absolute;border-radius:50%;border:2px solid rgba(255,255,255,0.15); }
+  .bc1 { width:100px;height:100px;top:0;right:0; }
+  .bc2 { width:60px;height:60px;top:30px;right:10px;background:rgba(255,255,255,0.07); }
+  .bc3 { width:20px;height:20px;top:10px;right:80px;background:rgba(255,255,255,0.2);border:none; }
+
+  .banner-left { z-index:1; }
+  .banner-sofi { display:flex;align-items:center;gap:10px;margin-bottom:8px; }
+  .banner-logo-mark { width:32px;height:32px;background:rgba(255,255,255,0.2);border-radius:50%;display:flex;align-items:center;justify-content:center; }
+  .banner-logo-mark::after { content:'';width:12px;height:12px;border-radius:50%;background:white;opacity:0.9; }
+  .banner-wordmark { font-size:22px;font-weight:800;color:white;letter-spacing:-0.5px; }
+  .banner-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px; font-weight: 900;
+    color: white; line-height: 1.2;
+  }
+  .banner-sub { font-size:13px;color:rgba(255,255,255,0.75);margin-top:4px;font-weight:500; }
+
+  .banner-emoji {
+    font-size: 52px;
+    z-index: 1;
+    animation: bounce 1s ease-in-out infinite alternate;
+  }
+  @keyframes bounce {
+    from { transform: scale(1) rotate(-5deg); }
+    to   { transform: scale(1.1) rotate(5deg); }
+  }
+
+  /* PDF viewer */
+  .pdf-wrapper {
+    width: 100%;
+    background: var(--white);
+    border-radius: 0 0 20px 20px;
+    box-shadow: 0 8px 32px rgba(0,130,160,0.12), 0 32px 64px rgba(13,27,42,0.08);
+    overflow: hidden;
+  }
+
+  .pdf-toolbar {
+    background: var(--white);
+    border-bottom: 1px solid rgba(0,162,199,0.1);
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .pdf-label {
+    font-size: 12px; font-weight: 700;
+    color: var(--muted); letter-spacing: 1.4px; text-transform: uppercase;
+  }
+  .pdf-download {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--sofi-blue-light);
+    color: var(--sofi-blue-dark);
+    border: 1.5px solid var(--sofi-blue-mid);
+    border-radius: 8px;
+    padding: 6px 14px;
+    font-size: 12px; font-weight: 700;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+  .pdf-download:hover { background: var(--sofi-blue-mid); }
+
+  iframe.brochure {
+    width: 100%;
+    height: 680px;
+    border: none;
+    display: block;
+  }
+
+  .back-link {
+    margin-top: 20px;
+    font-size: 13px; color: var(--muted);
+  }
+  .back-link a { color: var(--sofi-blue); font-weight: 600; text-decoration: none; }
+  .back-link a:hover { text-decoration: underline; }
+</style>
 </head>
+<body>
 
-<body style="font-family:Arial;text-align:center;margin-top:100px;">
+  <div class="bg-circles">
+    <span></span><span></span><span></span>
+    <span></span><span></span><span></span>
+  </div>
 
-<h1>Application Status Update</h1>
+  <!-- PRE-REVEAL -->
+  <div id="pre-reveal">
+    <div class="pre-card">
+      <div class="pre-header">
+        <div class="hc hc1"></div><div class="hc hc2"></div>
+        <div class="hc hc3"></div><div class="hc hc4"></div>
+        <div class="sofi-logo">
+          <div class="sofi-logo-mark"></div>
+          <div class="sofi-wordmark">CMU</div>
+        </div>
+        <div class="header-sub">Application Status</div>
+      </div>
+      <div class="pre-body">
+        <div class="envelope">📬</div>
+        <div class="pre-title">Your status update is ready</div>
+        <p class="pre-subtitle">We have an important update regarding your 2026–2027 application. Tap below to open it.</p>
+        <button class="reveal-btn" onclick="reveal()">
+          Open Status Update <span class="btn-arrow">→</span>
+        </button>
+      </div>
+    </div>
+  </div>
 
-<button onclick="reveal()">Open Status Update</button>
+  <!-- POST-REVEAL -->
+  <div id="post-reveal">
+    <div class="congrats-banner">
+      <div class="banner-circles">
+        <div class="bc bc1"></div><div class="bc bc2"></div><div class="bc bc3"></div>
+      </div>
+      <div class="banner-left">
+        <div class="banner-sofi">
+          <div class="banner-logo-mark"></div>
+          <div class="banner-wordmark">CMU</div>
+        </div>
+        <div class="banner-title">Congratulations! 🎉</div>
+        <div class="banner-sub">You've been accepted — here's your official brochure.</div>
+      </div>
+      <div class="banner-emoji">🏆</div>
+    </div>
 
-<div id="video" style="display:none">
+    <div class="pdf-wrapper">
+      <div class="pdf-toolbar">
+        <span class="pdf-label">Acceptance Brochure</span>
+        <a class="pdf-download" href="brochure.pdf" download>
+          ⬇ Download PDF
+        </a>
+      </div>
+      <iframe class="brochure" src="brochure.pdf#toolbar=0&navpanes=0&scrollbar=1"></iframe>
+    </div>
 
-<h2>Congratulations! 🎉</h2>
-
-<video width="600" autoplay controls>
-<source src="acceptance.mp4" type="video/mp4">
-</video>
-
-</div>
+    <div class="back-link">
+      <a href="dashboard.html">← Back to Dashboard</a>
+    </div>
+  </div>
 
 <script>
+  function reveal() {
+    // CMU blue-toned confetti burst
+    const colors = ['#00A2C7', '#00BFE8', '#B3E8F5', '#007FA0', '#ffffff', '#E0F6FB'];
 
-function reveal(){
+    // First burst
+    confetti({
+      particleCount: 120,
+      spread: 100,
+      origin: { y: 0.55 },
+      colors,
+      scalar: 1.1
+    });
 
-confetti({
-particleCount:300,
-spread:120
-});
+    // Left cannon
+    setTimeout(() => {
+      confetti({
+        particleCount: 80,
+        angle: 60,
+        spread: 70,
+        origin: { x: 0, y: 0.6 },
+        colors
+      });
+    }, 200);
 
-document.getElementById("video").style.display="block";
+    // Right cannon
+    setTimeout(() => {
+      confetti({
+        particleCount: 80,
+        angle: 120,
+        spread: 70,
+        origin: { x: 1, y: 0.6 },
+        colors
+      });
+    }, 350);
 
-}
+    // Final top shower
+    setTimeout(() => {
+      confetti({
+        particleCount: 60,
+        spread: 130,
+        origin: { y: 0.3 },
+        colors,
+        gravity: 0.8
+      });
+    }, 600);
 
+    // Transition screens
+    document.getElementById('pre-reveal').style.display = 'none';
+    document.getElementById('post-reveal').style.display = 'flex';
+  }
 </script>
 
 </body>
