@@ -1,53 +1,59 @@
 <!DOCTYPE html>
 <html>
 <head>
-<img src="logo.png" width="120">
-<title>Applicant Portal</title>
+  <title>Applicant Portal</title>
 
-<style>
-body{
-font-family: Arial;
-background:#f5f7fb;
-text-align:center;
-margin-top:120px;
-}
+  <style>
+    body{
+      font-family: Arial;
+      background:#f5f7fb; /* page background */
+      text-align:center;
+      margin-top:120px;
+    }
 
-.portal{
-background:white;
-padding:40px;
-width:350px;
-margin:auto;
-box-shadow:0 0 10px rgba(0,0,0,0.1);
-border-radius:8px;
-}
+    .portal{
+      background: rgba(255,255,255,0.9); /* slightly transparent so logo shows behind */
+      padding:40px;
+      width:350px;
+      margin:auto;
+      box-shadow:0 0 10px rgba(0,0,0,0.1);
+      border-radius:8px;
+    }
 
-input{
-width:100%;
-padding:10px;
-margin:10px 0;
-}
+    input{
+      width:100%;
+      padding:10px;
+      margin:10px 0;
+    }
 
-button{
-background:#00274C;
-color:white;
-padding:12px;
-border:none;
-width:100%;
-cursor:pointer;
-}
-</style>
+    button{
+      background:#00274C;
+      color:white;
+      padding:12px;
+      border:none;
+      width:100%;
+      cursor:pointer;
+    }
+
+    .logo{
+      width:120px;
+      margin-bottom:20px;
+    }
+  </style>
 </head>
 
 <body>
 
 <div class="portal">
-<h2>Applicant Portal</h2>
+  <!-- logo goes here, inside portal -->
+  <img src="logo.png" class="logo" alt="University Logo">
 
-<input placeholder="Email">
-<input type="password" placeholder="Password">
+  <h2>Applicant Portal</h2>
 
-<button onclick="location.href='dashboard.html'">Login</button>
+  <input placeholder="Email">
+  <input type="password" placeholder="Password">
 
+  <button onclick="location.href='dashboard.html'">Login</button>
 </div>
 
 </body>
