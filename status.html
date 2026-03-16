@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+</head>
+
+<body style="font-family:Arial;text-align:center;margin-top:100px;">
+
+<h1>Application Status Update</h1>
+
+<button onclick="reveal()">Open Status Update</button>
+
+<div id="video" style="display:none">
+
+<h2>Congratulations! 🎉</h2>
+
+<video width="600" autoplay controls>
+<source src="acceptance.mp4" type="video/mp4">
+</video>
+
+</div>
+
+<script>
+
+function reveal(){
+
+confetti({
+particleCount:300,
+spread:120
+});
+
+document.getElementById("video").style.display="block";
+
+}
+
+</script>
+
+</body>
+</html>
