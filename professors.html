@@ -44,7 +44,7 @@
   .dean-card { background: var(--card-bg); border: 1px solid rgba(243,156,18,0.35); border-radius: 20px; overflow: hidden; box-shadow: 0 0 40px -10px rgba(243,156,18,0.25); transition: transform 0.25s ease, box-shadow 0.25s ease; }
   .dean-card:hover { transform: translateY(-5px); box-shadow: 0 0 60px -10px rgba(243,156,18,0.4); }
   .dean-banner { height: 6px; background: linear-gradient(90deg, #B7770D, #F39C12, #FFD700); }
-  .dean-photo-wrap { position: relative; background: #d6cfc7; height: 320px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+  .dean-photo-wrap { position: relative; background: #1AABBA; height: 320px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
   .dean-photo-wrap::after { content:''; position:absolute; inset:0; background: linear-gradient(to bottom, transparent 50%, var(--card-bg) 100%); }
   .dean-photo { width:100%;height:100%;object-fit:cover;object-position:top;display:block; }
   .dean-placeholder { width:100px;height:100px;border-radius:50%;background:linear-gradient(135deg,#B7770D,#F39C12);display:flex;align-items:center;justify-content:center;font-size:40px;font-weight:800;color:white;z-index:1; }
@@ -61,16 +61,16 @@
   .prof-card { border-radius: 20px; overflow: hidden; position: relative; animation: fadeUp 0.7s cubic-bezier(0.22,1,0.36,1) both; transition: transform 0.25s ease, box-shadow 0.25s ease; }
   .prof-card:hover { transform: translateY(-6px) scale(1.01); }
 
-  .house-1 { --h:#C0392B;--h2:#E74C3C;--hbg:rgba(192,57,43,0.12);--hborder:rgba(192,57,43,0.3); }
-  .house-2 { --h:#1A6B3A;--h2:#27AE60;--hbg:rgba(26,107,58,0.12);--hborder:rgba(39,174,96,0.3); }
-  .house-3 { --h:#1A4A8A;--h2:#2980B9;--hbg:rgba(26,74,138,0.12);--hborder:rgba(41,128,185,0.3); }
-  .house-4 { --h:#7D3C98;--h2:#9B59B6;--hbg:rgba(125,60,152,0.12);--hborder:rgba(155,89,182,0.3); }
-  .house-5 { --h:#117A65;--h2:#1ABC9C;--hbg:rgba(17,122,101,0.12);--hborder:rgba(26,188,156,0.3); }
+  .house-1 { --h:#6B2D8B;--h2:#8E44AD;--hbg:#6B2D8B;--hborder:rgba(107,45,139,0.6); }
+  .house-2 { --h:#B22222;--h2:#E03030;--hbg:#B22222;--hborder:rgba(178,34,34,0.6); }
+  .house-3 { --h:#D4A017;--h2:#F0C030;--hbg:#D4A017;--hborder:rgba(212,160,23,0.6); }
+  .house-4 { --h:#1B2A4A;--h2:#2C3E6B;--hbg:#1B2A4A;--hborder:rgba(27,42,74,0.8); }
+  .house-5 { --h:#B0106A;--h2:#D4328A;--hbg:#B0106A;--hborder:rgba(176,16,106,0.6); }
 
   .prof-card-inner { background:var(--card-bg);border:1px solid var(--hborder);border-radius:20px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.3);transition:box-shadow 0.25s ease; }
   .prof-card:hover .prof-card-inner { box-shadow:0 8px 40px rgba(0,0,0,0.4),0 0 30px -8px var(--h); }
   .card-banner { height:6px;background:linear-gradient(90deg,var(--h),var(--h2)); }
-  .photo-wrap { position:relative;background:#d6cfc7;height:320px;display:flex;align-items:center;justify-content:center;overflow:hidden; }
+  .photo-wrap { position:relative;background:var(--hbg);height:320px;display:flex;align-items:center;justify-content:center;overflow:hidden; }
   .photo-wrap::after { content:'';position:absolute;inset:0;background:linear-gradient(to bottom,transparent 50%,var(--card-bg) 100%); }
   .prof-photo { width:100%;height:100%;object-fit:cover;object-position:top;display:block; }
   .photo-placeholder { width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,var(--h),var(--h2));display:flex;align-items:center;justify-content:center;font-size:30px;font-weight:800;color:white;z-index:1; }
@@ -213,23 +213,6 @@
 
   <div class="page-footer">© Capital Markets University · All rights reserved</div>
 <script>
-  function matchBg(img) {
-    try {
-      const canvas = document.createElement("canvas");
-      const size = 20;
-      canvas.width = size; canvas.height = size;
-      const ctx = canvas.getContext("2d");
-      ctx.drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight, 0, 0, size, size);
-      const d = ctx.getImageData(0, 0, 1, 1).data;
-      const color = `rgb(${d[0]},${d[1]},${d[2]})`;
-      const wrap = img.closest(".photo-wrap, .dean-photo-wrap");
-      if (wrap) wrap.style.background = color;
-    } catch(e) {}
-  }
-  document.querySelectorAll(".prof-photo, .dean-photo").forEach(img => {
-    if (img.complete </body></body> img.naturalWidth) matchBg(img);
-    else img.addEventListener("load", () => matchBg(img));
-  });
 </script>
 </body>
 </html>
