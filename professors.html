@@ -6,7 +6,7 @@
 <title>Capital Markets University — Meet the Professors</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,700;0,900;1,700&display=swap" rel="stylesheet">
 <style>
-  :root { --bg: #0D1B2A; --card-bg: #111e2e; --muted: #7A96A8; --white: #FFFFFF; }
+  :root { --bg: #F4FAFB; --card-bg: #FFFFFF; --muted: #7A96A8; --white: #FFFFFF; }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: 'Inter', sans-serif; background: var(--bg); min-height: 100vh; padding: 48px 24px 64px; position: relative; overflow-x: hidden; }
   .stars { position: fixed; inset: 0; pointer-events: none; z-index: 0;
@@ -26,17 +26,17 @@
   }
 
   .page-header { position: relative; z-index: 10; text-align: center; margin-bottom: 56px; animation: fadeUp 0.7s cubic-bezier(0.22,1,0.36,1) both; }
-  .back-link { display: inline-flex; align-items: center; gap: 6px; color: var(--muted); font-size: 13px; font-weight: 600; text-decoration: none; margin-bottom: 28px; transition: color 0.2s; }
-  .back-link:hover { color: white; }
+  .back-link { display: inline-flex; align-items: center; gap: 6px; color: #7A96A8; font-size: 13px; font-weight: 600; text-decoration: none; margin-bottom: 28px; transition: color 0.2s; }
+  .back-link:hover { color: #0D1B2A; }
   .cmu-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(0,162,199,0.12); border: 1px solid rgba(0,162,199,0.25); border-radius: 99px; padding: 6px 16px; margin-bottom: 18px; }
   .cmu-dot { width:8px;height:8px;border-radius:50%;background:#00A2C7; }
   .cmu-badge-text { font-size:12px;font-weight:700;color:#00A2C7;letter-spacing:1.5px;text-transform:uppercase; }
-  .page-title { font-family: 'Playfair Display', serif; font-size: clamp(32px, 5vw, 52px); font-weight: 900; color: white; line-height: 1.1; margin-bottom: 14px; }
+  .page-title { font-family: 'Playfair Display', serif; font-size: clamp(32px, 5vw, 52px); font-weight: 900; color: #0D1B2A; line-height: 1.1; margin-bottom: 14px; }
   .page-title em { font-style: italic; color: #00A2C7; }
-  .page-sub { font-size: 15px; color: var(--muted); font-weight: 400; max-width: 480px; margin: 0 auto; line-height: 1.7; }
+  .page-sub { font-size: 15px; color: #7A96A8; font-weight: 400; max-width: 480px; margin: 0 auto; line-height: 1.7; }
   .divider { display: flex; align-items: center; gap: 16px; max-width: 320px; margin: 28px auto 0; }
-  .divider-line { flex:1; height:1px; background: rgba(255,255,255,0.08); }
-  .divider-star { color: rgba(255,255,255,0.2); font-size: 14px; }
+  .divider-line { flex:1; height:1px; background: rgba(0,162,199,0.15); }
+  .divider-star { color: rgba(0,162,199,0.4); font-size: 14px; }
 
   /* Dean spotlight */
   .dean-wrap { position: relative; z-index: 10; max-width: 420px; margin: 0 auto 40px; animation: fadeUp 0.7s 0.05s cubic-bezier(0.22,1,0.36,1) both; }
@@ -50,8 +50,8 @@
   .dean-placeholder { width:100px;height:100px;border-radius:50%;background:linear-gradient(135deg,#B7770D,#F39C12);display:flex;align-items:center;justify-content:center;font-size:40px;font-weight:800;color:white;z-index:1; }
   .dean-crest { position:absolute;top:14px;right:14px;width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#B7770D,#FFD700);display:flex;align-items:center;justify-content:center;font-size:20px;z-index:2;box-shadow:0 2px 8px rgba(0,0,0,0.4); }
   .dean-body { padding: 16px 24px 24px; text-align: center; }
-  .dean-house { font-size:10px;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;color:#F39C12;margin-bottom:6px; }
-  .dean-name { font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:white;margin-bottom:6px; }
+  .dean-house { font-size:14px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:#F39C12;margin-bottom:6px; }
+  .dean-name { font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:#0D1B2A;margin-bottom:6px; }
   .dean-subject { font-size:13px;color:var(--muted);font-weight:500;display:flex;align-items:center;justify-content:center;gap:6px; }
   .dean-subject-dot { width:6px;height:6px;border-radius:50%;background:#F39C12;flex-shrink:0; }
 
@@ -76,8 +76,8 @@
   .photo-placeholder { width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,var(--h),var(--h2));display:flex;align-items:center;justify-content:center;font-size:30px;font-weight:800;color:white;z-index:1; }
   .crest { position:absolute;top:14px;right:14px;width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--h),var(--h2));display:flex;align-items:center;justify-content:center;font-size:15px;z-index:2;box-shadow:0 2px 8px rgba(0,0,0,0.4); }
   .card-body { padding:14px 18px 20px; }
-  .house-label { font-size:10px;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;color:var(--h2);margin-bottom:6px; }
-  .prof-name { font-family:'Playfair Display',serif;font-size:19px;font-weight:700;color:white;line-height:1.2;margin-bottom:6px; }
+  .house-label { font-size:14px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--h2);margin-bottom:6px; }
+  .prof-name { font-family:'Playfair Display',serif;font-size:19px;font-weight:700;color:#0D1B2A;line-height:1.2;margin-bottom:6px; }
   .prof-subject { font-size:13px;color:var(--muted);font-weight:500;display:flex;align-items:center;gap:6px; }
   .subject-dot { width:6px;height:6px;border-radius:50%;background:var(--h2);flex-shrink:0; }
 
@@ -89,7 +89,7 @@
 
   @keyframes fadeUp { from{opacity:0;transform:translateY(20px);} to{opacity:1;transform:translateY(0);} }
 
-  .page-footer { position:relative;z-index:10;text-align:center;margin-top:56px;font-size:12px;color:rgba(255,255,255,0.2); }
+  .page-footer { position:relative;z-index:10;text-align:center;margin-top:56px;font-size:12px;color:rgba(0,0,0,0.25); }
 </style>
 </head>
 <body>
@@ -116,7 +116,7 @@
       </div>
       <div class="dean-body">
         <div class="dean-house">Dean</div>
-        <div class="dean-name">Richard Johns</div>
+        <div class="dean-name">Dean Johns</div>
         
       </div>
     </div>
@@ -136,7 +136,7 @@
         </div>
         <div class="card-body">
           <div class="house-label">Home Loans</div>
-          <div class="prof-name">Tim Brown</div>
+          <div class="prof-name">Professor Brown</div>
           
         </div>
       </div>
@@ -153,7 +153,7 @@
         </div>
         <div class="card-body">
           <div class="house-label">Transaction Development</div>
-          <div class="prof-name">Jennifer Robinson</div>
+          <div class="prof-name">Professor Robinson</div>
           
         </div>
       </div>
@@ -170,7 +170,7 @@
         </div>
         <div class="card-body">
           <div class="house-label">Debt Investor Relations</div>
-          <div class="prof-name">Andy Cherna</div>
+          <div class="prof-name">Professor Cherna</div>
           
         </div>
       </div>
@@ -187,7 +187,7 @@
         </div>
         <div class="card-body">
           <div class="house-label">Structuring & Execution</div>
-          <div class="prof-name">Lisa Waller</div>
+          <div class="prof-name">Professor Waller</div>
         </div>
       </div>
     </div>
@@ -203,7 +203,7 @@
         </div>
         <div class="card-body">
           <div class="house-label">Investor Services</div>
-          <div class="prof-name">Kelly Dunnagan</div>
+          <div class="prof-name">Professor Dunnagan</div>
           
         </div>
       </div>
